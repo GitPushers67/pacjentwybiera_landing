@@ -59,26 +59,21 @@
         }
         .nav-cta:hover { background: var(--green-light); transform: scale(1.05); }
 
-        /* ===== HERO - Pinned zoom phone ===== */
-        .hero-container {
-            height: 300vh;
-            position: relative;
-        }
-        .hero-sticky {
-            position: sticky;
-            top: 0;
-            height: 100vh;
+        /* ===== HERO - Simple with scroll fade ===== */
+        .hero-section {
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
+            padding: 7rem 2rem 4rem;
             background: radial-gradient(ellipse at 50% 50%, #0f2b27 0%, var(--dark) 70%);
+            position: relative;
+            overflow: hidden;
         }
         .hero-text-block {
             text-align: center;
             z-index: 2;
-            transition: opacity 0.1s linear, transform 0.1s linear;
         }
         .hero-badge {
             display: inline-block;
@@ -123,17 +118,10 @@
         }
         .hero-cta:hover { transform: scale(1.05); box-shadow: 0 0 60px rgba(245, 166, 35, 0.5); }
         .hero-phone {
-            position: absolute;
-            bottom: -60%;
-            left: 50%;
-            transform: translateX(-50%) scale(0.3);
-            width: 280px;
+            width: 260px;
             border-radius: 30px;
             box-shadow: 0 40px 100px rgba(0,0,0,0.5);
-            z-index: 3;
-            transition: transform 0.1s linear, bottom 0.1s linear, opacity 0.1s linear;
-            will-change: transform;
-            opacity: 0;
+            margin-top: 3rem;
         }
 
         /* ===== FEATURES - Reveal on scroll ===== */
@@ -261,20 +249,10 @@
             .philosophy-section { padding: 5rem 1.5rem; }
         }
 
-        /* ===== SCREENSHOTS - Horizontal scroll driven by vertical scroll ===== */
-        .screenshots-container {
-            height: 400vh;
-            position: relative;
+        /* ===== SCREENSHOTS - Horizontal swipe ===== */
+        .screenshots-section {
+            padding: 6rem 0;
             background: var(--dark);
-        }
-        .screenshots-sticky {
-            position: sticky;
-            top: 0;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            overflow: hidden;
         }
         .screenshots-header {
             text-align: center;
@@ -293,19 +271,23 @@
         }
         .screenshots-track {
             display: flex;
-            gap: 2rem;
-            padding: 0 4rem;
-            will-change: transform;
-            transition: transform 0.1s linear;
+            gap: 1.5rem;
+            padding: 1rem 2rem;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
         }
+        .screenshots-track::-webkit-scrollbar { display: none; }
         .screenshot-card {
             flex: 0 0 auto;
             text-align: center;
+            scroll-snap-align: center;
             transition: transform 0.3s ease;
         }
-        .screenshot-card:hover { transform: scale(1.05) rotate(-1deg); }
+        .screenshot-card:hover { transform: scale(1.03); }
         .screenshot-card img {
-            width: 240px;
+            width: 220px;
             border-radius: 24px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.4);
         }
@@ -443,21 +425,19 @@
     </div>
 </nav>
 
-<!-- HERO: Pinned section with phone zoom -->
-<div class="hero-container" id="heroContainer">
-    <div class="hero-sticky">
-        <div class="hero-text-block" id="heroText">
-            <div class="hero-badge">DIETA ONKOLOGICZNA</div>
-            <h1 class="hero-title">Wsparcie żywieniowe<br><span>w trakcie leczenia</span></h1>
-            <p class="hero-subtitle">Aplikacja mobilna z rekomendacjami AI dopasowanymi do objawów, etapu leczenia i indywidualnych potrzeb pacjenta.</p>
-            <a href="https://gitpushers67.github.io/pacjentwybiera/" class="hero-cta" target="_blank">
-                Otwórz aplikację
-                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
-            </a>
-        </div>
-        <img class="hero-phone" id="heroPhone" src="screenshots/IMG_0748.PNG" alt="Aplikacja PacjentWybiera">
+<!-- HERO -->
+<section class="hero-section">
+    <div class="hero-text-block">
+        <div class="hero-badge">DIETA ONKOLOGICZNA</div>
+        <h1 class="hero-title">Wsparcie żywieniowe<br><span>w trakcie leczenia</span></h1>
+        <p class="hero-subtitle">Aplikacja mobilna z rekomendacjami AI dopasowanymi do objawów, etapu leczenia i indywidualnych potrzeb pacjenta.</p>
+        <a href="https://gitpushers67.github.io/pacjentwybiera/" class="hero-cta" target="_blank">
+            Otwórz aplikację
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+        </a>
     </div>
-</div>
+    <img class="hero-phone" src="screenshots/IMG_0748.PNG" alt="Aplikacja PacjentWybiera">
+</section>
 
 <!-- FEATURES -->
 <section class="features-section">
@@ -553,24 +533,22 @@
     </div>
 </section>
 
-<!-- SCREENSHOTS: Horizontal scroll driven by vertical scroll -->
-<div class="screenshots-container" id="screenshotsContainer">
-    <div class="screenshots-sticky">
-        <div class="screenshots-header">
-            <h2>Interfejs aplikacji</h2>
-            <p>Przewijaj dalej, aby zobaczyć ekrany</p>
-        </div>
-        <div class="screenshots-track" id="screenshotsTrack">
-            <div class="screenshot-card"><img src="screenshots/IMG_0748.PNG" alt="Ekran główny"><span>Ekran główny</span></div>
-            <div class="screenshot-card"><img src="screenshots/IMG_0749.PNG" alt="Szczegóły dania"><span>Szczegóły dania</span></div>
-            <div class="screenshot-card"><img src="screenshots/IMG_0750.PNG" alt="Plan posiłków"><span>Plan posiłków</span></div>
-            <div class="screenshot-card"><img src="screenshots/IMG_0751.PNG" alt="Zamówienie"><span>Zamówienie z AI</span></div>
-            <div class="screenshot-card"><img src="screenshots/IMG_0752.PNG" alt="Objawy"><span>Monitorowanie objawów</span></div>
-            <div class="screenshot-card"><img src="screenshots/IMG_0753.PNG" alt="Chat"><span>Chat z dietetykiem</span></div>
-            <div class="screenshot-card"><img src="screenshots/IMG_0754.PNG" alt="Alergeny"><span>Alergeny</span></div>
-        </div>
+<!-- SCREENSHOTS: Horizontal swipe -->
+<section class="screenshots-section">
+    <div class="screenshots-header">
+        <h2>Interfejs aplikacji</h2>
+        <p>Przesuń w lewo/prawo, aby zobaczyć ekrany</p>
     </div>
-</div>
+    <div class="screenshots-track">
+        <div class="screenshot-card"><img src="screenshots/IMG_0748.PNG" alt="Ekran główny"><span>Ekran główny</span></div>
+        <div class="screenshot-card"><img src="screenshots/IMG_0749.PNG" alt="Szczegóły dania"><span>Szczegóły dania</span></div>
+        <div class="screenshot-card"><img src="screenshots/IMG_0750.PNG" alt="Plan posiłków"><span>Plan posiłków</span></div>
+        <div class="screenshot-card"><img src="screenshots/IMG_0751.PNG" alt="Zamówienie"><span>Zamówienie z AI</span></div>
+        <div class="screenshot-card"><img src="screenshots/IMG_0752.PNG" alt="Objawy"><span>Monitorowanie objawów</span></div>
+        <div class="screenshot-card"><img src="screenshots/IMG_0753.PNG" alt="Chat"><span>Chat z dietetykiem</span></div>
+        <div class="screenshot-card"><img src="screenshots/IMG_0754.PNG" alt="Alergeny"><span>Alergeny</span></div>
+    </div>
+</section>
 
 <!-- STEPS -->
 <section class="steps-section">
@@ -616,74 +594,18 @@
 </footer>
 
 <script>
-// === HERO: Phone zoom + text fade on scroll ===
-const heroContainer = document.getElementById('heroContainer');
-const heroPhone = document.getElementById('heroPhone');
-const heroText = document.getElementById('heroText');
-
-function handleHeroScroll() {
-    const rect = heroContainer.getBoundingClientRect();
-    const scrolled = -rect.top;
-    const total = heroContainer.offsetHeight - window.innerHeight;
-    const progress = Math.max(0, Math.min(1, scrolled / total));
-
-    // Phone: hidden at start, appears after 30% scroll progress
-    const phoneStart = 0.3;
-    const phoneProgress = Math.max(0, (progress - phoneStart) / (1 - phoneStart));
-    const scale = 0.3 + phoneProgress * 1;
-    const bottom = -60 + phoneProgress * 80;
-    const phoneOpacity = Math.min(1, phoneProgress * 3);
-    heroPhone.style.transform = `translateX(-50%) scale(${scale})`;
-    heroPhone.style.bottom = `${bottom}%`;
-    heroPhone.style.opacity = phoneOpacity;
-
-    // Text: fades out as phone appears
-    const textOpacity = Math.max(0, 1 - progress * 2);
-    const textY = progress * -60;
-    heroText.style.opacity = textOpacity;
-    heroText.style.transform = `translateY(${textY}px)`;
-}
-
-// === SCREENSHOTS: Horizontal scroll driven by vertical scroll ===
-const screenshotsContainer = document.getElementById('screenshotsContainer');
-const screenshotsTrack = document.getElementById('screenshotsTrack');
-
-function handleScreenshotsScroll() {
-    const rect = screenshotsContainer.getBoundingClientRect();
-    const scrolled = -rect.top;
-    const total = screenshotsContainer.offsetHeight - window.innerHeight;
-    const progress = Math.max(0, Math.min(1, scrolled / total));
-
-    const trackWidth = screenshotsTrack.scrollWidth - window.innerWidth + 100;
-    const translateX = -progress * trackWidth;
-    screenshotsTrack.style.transform = `translateX(${translateX}px)`;
-}
-
 // === REVEAL: Elements appear on scroll ===
 const revealElements = document.querySelectorAll('.reveal');
 const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
+    entries.forEach(entry => {
         if (entry.isIntersecting) {
-            // Stagger delay based on sibling index
             const siblings = entry.target.parentElement.querySelectorAll('.reveal');
             const index = Array.from(siblings).indexOf(entry.target);
-            setTimeout(() => {
-                entry.target.classList.add('revealed');
-            }, index * 100);
+            setTimeout(() => entry.target.classList.add('revealed'), index * 100);
         }
     });
 }, { threshold: 0.15 });
 revealElements.forEach(el => revealObserver.observe(el));
-
-// === SCROLL HANDLER ===
-function onScroll() {
-    handleHeroScroll();
-    handleScreenshotsScroll();
-}
-
-window.addEventListener('scroll', onScroll, { passive: true });
-window.addEventListener('resize', onScroll);
-onScroll();
 </script>
 </body>
 </html>
