@@ -6,45 +6,26 @@
     <title>PacjentWybiera – Aplikacja do zarządzania dietą onkologiczną</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         :root {
             --green: #1B7A6E;
             --green-light: #2ABFBF;
             --green-bg: #f0faf8;
             --orange: #F5A623;
             --orange-dark: #E8951A;
-            --dark: #1a2332;
+            --dark: #0a0a0a;
             --gray: #5f6d7e;
             --gray-light: #94a3b8;
             --white: #ffffff;
-            --light: #f8fafb;
         }
-
-        html { scroll-behavior: smooth; }
-
+        html { scroll-behavior: auto; }
         body {
             font-family: 'Inter', -apple-system, sans-serif;
             color: var(--dark);
-            background: var(--white);
+            background: var(--dark);
             overflow-x: hidden;
-        }
-
-        .animate-on-scroll {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.7s ease, transform 0.7s ease;
-        }
-        .animate-on-scroll.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
         }
 
         /* Nav */
@@ -52,78 +33,79 @@
             position: fixed;
             top: 0;
             width: 100%;
-            z-index: 100;
+            z-index: 1000;
             padding: 1rem 2rem;
-            background: rgba(255,255,255,0.92);
+            background: rgba(10,10,10,0.8);
             backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(0,0,0,0.04);
-            transition: box-shadow 0.3s ease;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
         }
-        nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.06); }
         .nav-inner {
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 0 auto;
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
-        .nav-logo img { height: 38px; }
+        .nav-logo img { height: 36px; filter: brightness(10); }
         .nav-cta {
             background: var(--green);
             color: white;
             padding: 0.6rem 1.4rem;
-            border-radius: 8px;
+            border-radius: 50px;
             text-decoration: none;
             font-weight: 600;
-            font-size: 0.88rem;
+            font-size: 0.85rem;
             transition: all 0.3s ease;
         }
-        .nav-cta:hover {
-            background: var(--green-light);
-            transform: translateY(-1px);
-        }
+        .nav-cta:hover { background: var(--green-light); transform: scale(1.05); }
 
-        /* Hero */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            padding: 7rem 2rem 4rem;
-            background: linear-gradient(160deg, var(--white) 0%, var(--green-bg) 100%);
+        /* ===== HERO - Pinned zoom phone ===== */
+        .hero-container {
+            height: 300vh;
+            position: relative;
         }
-        .hero-inner {
-            max-width: 1100px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
+        .hero-sticky {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
             align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: radial-gradient(ellipse at 50% 50%, #0f2b27 0%, var(--dark) 70%);
+        }
+        .hero-text-block {
+            text-align: center;
+            z-index: 2;
+            transition: opacity 0.1s linear, transform 0.1s linear;
         }
         .hero-badge {
             display: inline-block;
-            background: rgba(27, 122, 110, 0.08);
-            color: var(--green);
-            padding: 0.4rem 1rem;
-            border-radius: 6px;
-            font-size: 0.82rem;
+            background: rgba(42, 191, 191, 0.15);
+            color: var(--green-light);
+            padding: 0.4rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
             font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
             margin-bottom: 1.5rem;
-            letter-spacing: 0.02em;
         }
-        .hero-text h1 {
-            font-size: 3.2rem;
-            font-weight: 800;
-            line-height: 1.12;
-            margin-bottom: 1.2rem;
-            color: var(--dark);
+        .hero-title {
+            font-size: clamp(2.5rem, 7vw, 5rem);
+            font-weight: 900;
+            color: white;
+            line-height: 1.05;
+            margin-bottom: 1rem;
         }
-        .hero-text h1 span { color: var(--green); }
-        .hero-text p {
-            font-size: 1.1rem;
-            color: var(--gray);
-            line-height: 1.7;
-            margin-bottom: 2rem;
-            max-width: 460px;
+        .hero-title span { color: var(--green-light); }
+        .hero-subtitle {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            color: rgba(255,255,255,0.6);
+            max-width: 500px;
+            margin: 0 auto 2rem;
+            line-height: 1.6;
         }
         .hero-cta {
             display: inline-flex;
@@ -131,335 +113,486 @@
             gap: 0.6rem;
             background: var(--orange);
             color: white;
-            padding: 0.9rem 2rem;
-            border-radius: 10px;
+            padding: 1rem 2.2rem;
+            border-radius: 50px;
             text-decoration: none;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 1rem;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 20px rgba(245, 166, 35, 0.2);
+            box-shadow: 0 0 40px rgba(245, 166, 35, 0.3);
         }
-        .hero-cta:hover {
-            background: var(--orange-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(245, 166, 35, 0.3);
+        .hero-cta:hover { transform: scale(1.05); box-shadow: 0 0 60px rgba(245, 166, 35, 0.5); }
+        .hero-phone {
+            position: absolute;
+            bottom: -60%;
+            left: 50%;
+            transform: translateX(-50%) scale(0.3);
+            width: 280px;
+            border-radius: 30px;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.5);
+            z-index: 3;
+            transition: transform 0.1s linear, bottom 0.1s linear, opacity 0.1s linear;
+            will-change: transform;
+            opacity: 0;
         }
-        .hero-cta svg { width: 18px; height: 18px; }
 
-        .hero-phones {
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            gap: 1rem;
+        /* ===== FEATURES - Reveal on scroll ===== */
+        .features-section {
+            position: relative;
+            padding: 10rem 2rem;
+            background: var(--white);
         }
-        .hero-phones img {
-            width: 200px;
-            border-radius: 20px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
-            animation: float 5s ease-in-out infinite;
+        .features-inner {
+            max-width: 1100px;
+            margin: 0 auto;
         }
-        .hero-phones img:nth-child(2) { animation-delay: 0.8s; }
+        .features-header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+        .features-header h2 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            color: var(--dark);
+            opacity: 0;
+            transform: translateY(60px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .features-header h2.revealed { opacity: 1; transform: translateY(0); }
+        .features-header p {
+            font-size: 1.1rem;
+            color: var(--gray);
+            margin-top: 1rem;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s;
+        }
+        .features-header p.revealed { opacity: 1; transform: translateY(0); }
 
-        /* Section common */
-        .section { padding: 5rem 2rem; max-width: 1100px; margin: 0 auto; }
-        .section-alt { background: var(--light); }
-        .section-header { text-align: center; margin-bottom: 3.5rem; }
-        .section-header h2 { font-size: 2.2rem; font-weight: 700; margin-bottom: 0.8rem; }
-        .section-header p { font-size: 1.05rem; color: var(--gray); max-width: 550px; margin: 0 auto; }
-
-        /* Features */
         .features-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
+            gap: 2rem;
         }
         .feature-card {
-            background: var(--white);
-            border-radius: 14px;
-            padding: 1.8rem;
-            border: 1px solid rgba(0,0,0,0.06);
-            transition: all 0.3s ease;
+            background: #f8fafb;
+            border-radius: 20px;
+            padding: 2.5rem 2rem;
+            border: 1px solid rgba(0,0,0,0.04);
+            opacity: 0;
+            transform: translateY(80px) scale(0.95);
+            transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .feature-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 35px rgba(0,0,0,0.06);
-        }
+        .feature-card.revealed { opacity: 1; transform: translateY(0) scale(1); }
+        .feature-card:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 20px 60px rgba(0,0,0,0.08); }
         .feature-icon {
-            width: 44px;
-            height: 44px;
-            border-radius: 10px;
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 1rem;
-            font-size: 1.2rem;
+            margin-bottom: 1.2rem;
+            font-size: 1.4rem;
         }
         .feature-icon.green { background: rgba(27, 122, 110, 0.1); color: var(--green); }
         .feature-icon.orange { background: rgba(245, 166, 35, 0.1); color: var(--orange); }
-        .feature-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; }
-        .feature-card p { color: var(--gray); font-size: 0.9rem; line-height: 1.6; }
+        .feature-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.6rem; }
+        .feature-card p { color: var(--gray); font-size: 0.92rem; line-height: 1.7; }
 
-        /* Screenshots */
-        .screenshots-wrap { padding: 5rem 2rem; background: var(--light); }
-        .screenshots-inner { max-width: 1100px; margin: 0 auto; }
-        .screenshots-scroll {
-            display: flex;
-            gap: 1.2rem;
-            overflow-x: auto;
-            padding: 1.5rem 0;
-            scroll-snap-type: x mandatory;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
+        /* ===== PHILOSOPHY - Pro-patient ===== */
+        .philosophy-section {
+            padding: 10rem 2rem;
+            background: linear-gradient(180deg, var(--green-bg) 0%, var(--white) 100%);
+            position: relative;
         }
-        .screenshots-scroll::-webkit-scrollbar { display: none; }
-        .screenshot-item { flex: 0 0 auto; scroll-snap-align: center; }
-        .screenshot-item img {
-            width: 240px;
+        .philosophy-inner { max-width: 1100px; margin: 0 auto; }
+        .philosophy-header { text-align: center; margin-bottom: 4rem; }
+        .philosophy-header h2 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            color: var(--dark);
+            opacity: 0;
+            transform: translateY(60px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .philosophy-header h2.revealed { opacity: 1; transform: translateY(0); }
+        .philosophy-header p {
+            font-size: 1.15rem;
+            color: var(--gray);
+            margin-top: 1rem;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s;
+        }
+        .philosophy-header p.revealed { opacity: 1; transform: translateY(0); }
+        .philosophy-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+        .philosophy-card {
+            background: white;
             border-radius: 20px;
-            box-shadow: 0 12px 35px rgba(0,0,0,0.08);
-            transition: transform 0.3s ease;
+            padding: 2.5rem;
+            border: 1px solid rgba(27, 122, 110, 0.1);
+            opacity: 0;
+            transform: translateY(60px) scale(0.95);
+            transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .screenshot-item:hover img { transform: scale(1.02); }
-        .screenshot-label {
-            text-align: center;
-            margin-top: 0.8rem;
-            font-weight: 500;
-            font-size: 0.82rem;
-            color: var(--gray-light);
-        }
-
-        /* Steps */
-        .steps { display: flex; flex-direction: column; gap: 1.2rem; }
-        .step {
+        .philosophy-card.revealed { opacity: 1; transform: translateY(0) scale(1); }
+        .philosophy-card:hover { transform: translateY(-6px); box-shadow: 0 20px 60px rgba(27, 122, 110, 0.1); }
+        .philosophy-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
+            background: rgba(27, 122, 110, 0.1);
+            color: var(--green);
             display: flex;
             align-items: center;
-            gap: 1.5rem;
-            padding: 1.5rem;
-            background: var(--white);
-            border-radius: 14px;
-            border: 1px solid rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
+            justify-content: center;
+            margin-bottom: 1.2rem;
         }
-        .step:hover { box-shadow: 0 6px 25px rgba(0,0,0,0.05); }
+        .philosophy-card h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 0.6rem; color: var(--green); }
+        .philosophy-card p { color: var(--gray); font-size: 0.95rem; line-height: 1.7; }
+
+        @media (max-width: 768px) {
+            .philosophy-grid { grid-template-columns: 1fr; }
+            .philosophy-section { padding: 5rem 1.5rem; }
+        }
+
+        /* ===== SCREENSHOTS - Horizontal scroll driven by vertical scroll ===== */
+        .screenshots-container {
+            height: 400vh;
+            position: relative;
+            background: var(--dark);
+        }
+        .screenshots-sticky {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .screenshots-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 0 2rem;
+        }
+        .screenshots-header h2 {
+            font-size: clamp(1.8rem, 4vw, 3rem);
+            font-weight: 800;
+            color: white;
+        }
+        .screenshots-header p {
+            color: rgba(255,255,255,0.5);
+            margin-top: 0.8rem;
+            font-size: 1.05rem;
+        }
+        .screenshots-track {
+            display: flex;
+            gap: 2rem;
+            padding: 0 4rem;
+            will-change: transform;
+            transition: transform 0.1s linear;
+        }
+        .screenshot-card {
+            flex: 0 0 auto;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        .screenshot-card:hover { transform: scale(1.05) rotate(-1deg); }
+        .screenshot-card img {
+            width: 240px;
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+        }
+        .screenshot-card span {
+            display: block;
+            margin-top: 1rem;
+            color: rgba(255,255,255,0.5);
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        /* ===== STEPS - Parallax stagger ===== */
+        .steps-section {
+            padding: 10rem 2rem;
+            background: linear-gradient(180deg, var(--white) 0%, var(--green-bg) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .steps-inner { max-width: 800px; margin: 0 auto; }
+        .steps-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        .steps-header h2 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 800;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .steps-header h2.revealed { opacity: 1; transform: translateY(0); }
+        .step-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 2rem;
+            padding: 2.5rem;
+            margin-bottom: 1.5rem;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.04);
+            opacity: 0;
+            transform: translateX(-100px) rotate(-2deg);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .step-item.revealed { opacity: 1; transform: translateX(0) rotate(0deg); }
+        .step-item:nth-child(even) { transform: translateX(100px) rotate(2deg); }
+        .step-item:nth-child(even).revealed { transform: translateX(0) rotate(0deg); }
         .step-num {
-            width: 42px;
-            height: 42px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             background: var(--green);
             color: white;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 700;
-            font-size: 1rem;
+            font-weight: 800;
+            font-size: 1.2rem;
             flex-shrink: 0;
         }
-        .step-content h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.2rem; }
-        .step-content p { color: var(--gray); font-size: 0.9rem; }
+        .step-content h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 0.4rem; }
+        .step-content p { color: var(--gray); font-size: 0.95rem; line-height: 1.6; }
 
-        /* CTA */
-        .cta-section { padding: 5rem 2rem; text-align: center; }
-        .cta-box {
-            max-width: 650px;
-            margin: 0 auto;
-            background: var(--green);
-            border-radius: 20px;
-            padding: 3.5rem 2.5rem;
-            color: white;
+        /* ===== CTA - Scale up reveal ===== */
+        .cta-section {
+            padding: 8rem 2rem;
+            background: var(--dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        .cta-box h2 { font-size: 1.9rem; font-weight: 700; margin-bottom: 0.8rem; }
-        .cta-box p { font-size: 1rem; opacity: 0.85; margin-bottom: 1.8rem; }
+        .cta-box {
+            max-width: 700px;
+            text-align: center;
+            background: linear-gradient(135deg, var(--green) 0%, #0f5c52 100%);
+            border-radius: 30px;
+            padding: 4rem 3rem;
+            color: white;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .cta-box.revealed { opacity: 1; transform: scale(1); }
+        .cta-box h2 { font-size: clamp(1.6rem, 4vw, 2.2rem); font-weight: 800; margin-bottom: 1rem; }
+        .cta-box p { font-size: 1.05rem; opacity: 0.8; margin-bottom: 2rem; line-height: 1.6; }
         .cta-btn {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
             background: var(--orange);
             color: white;
-            padding: 0.9rem 2.2rem;
-            border-radius: 10px;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
             text-decoration: none;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 1rem;
             transition: all 0.3s ease;
+            box-shadow: 0 0 30px rgba(245, 166, 35, 0.3);
         }
-        .cta-btn:hover { background: var(--orange-dark); transform: translateY(-2px); }
+        .cta-btn:hover { transform: scale(1.08); box-shadow: 0 0 50px rgba(245, 166, 35, 0.5); }
 
         /* Footer */
         footer {
-            padding: 2.5rem 2rem;
+            padding: 3rem 2rem;
             text-align: center;
-            color: var(--gray-light);
+            color: rgba(255,255,255,0.4);
             font-size: 0.85rem;
-            border-top: 1px solid rgba(0,0,0,0.05);
+            background: var(--dark);
+            border-top: 1px solid rgba(255,255,255,0.05);
         }
-        footer a { color: var(--green); text-decoration: none; }
+        footer a { color: var(--green-light); text-decoration: none; }
 
         /* Responsive */
         @media (max-width: 768px) {
-            .hero { padding: 6rem 1.5rem 3rem; min-height: auto; }
-            .hero-inner { grid-template-columns: 1fr; text-align: center; gap: 2.5rem; }
-            .hero-text h1 { font-size: 2.2rem; }
-            .hero-text p { margin: 0 auto 2rem; font-size: 1rem; }
-            .hero-badge { margin: 0 auto 1.5rem; display: inline-block; }
-            .hero-cta { margin: 0 auto; }
-            .hero-phones img { width: 150px; }
-            .features-grid { grid-template-columns: 1fr; gap: 1rem; }
-            .section { padding: 3.5rem 1.5rem; }
-            .section-header h2 { font-size: 1.7rem; }
-            .screenshots-wrap { padding: 3.5rem 1rem; }
-            .screenshot-item img { width: 200px; }
-            .step { flex-direction: column; text-align: center; gap: 0.8rem; padding: 1.2rem; }
-            .cta-box { padding: 2.5rem 1.5rem; }
-            .cta-box h2 { font-size: 1.5rem; }
-            nav { padding: 0.7rem 1.2rem; }
-            .nav-logo img { height: 32px; }
-            .nav-cta { padding: 0.5rem 1rem; font-size: 0.82rem; }
-        }
-        @media (max-width: 400px) {
-            .hero-text h1 { font-size: 1.8rem; }
-            .hero-phones img { width: 130px; }
-            .screenshot-item img { width: 170px; }
+            .hero-title { font-size: 2.5rem; }
+            .hero-phone { width: 200px; }
+            .features-grid { grid-template-columns: 1fr; }
+            .features-section { padding: 5rem 1.5rem; }
+            .screenshot-card img { width: 180px; }
+            .screenshots-track { gap: 1.2rem; padding: 0 2rem; }
+            .step-item { flex-direction: column; text-align: center; align-items: center; gap: 1rem; padding: 1.5rem; }
+            .steps-section { padding: 5rem 1.5rem; }
+            .cta-box { padding: 3rem 1.5rem; }
+            nav { padding: 0.8rem 1.2rem; }
+            .nav-logo img { height: 30px; }
         }
     </style>
 </head>
 <body>
 
-<nav id="nav">
+<nav>
     <div class="nav-inner">
         <div class="nav-logo"><img src="logo.png" alt="PacjentWybiera"></div>
         <a href="https://gitpushers67.github.io/pacjentwybiera/" class="nav-cta" target="_blank">Otwórz aplikację</a>
     </div>
 </nav>
 
-<section class="hero">
-    <div class="hero-inner">
-        <div class="hero-text">
+<!-- HERO: Pinned section with phone zoom -->
+<div class="hero-container" id="heroContainer">
+    <div class="hero-sticky">
+        <div class="hero-text-block" id="heroText">
             <div class="hero-badge">DIETA ONKOLOGICZNA</div>
-            <h1>Wsparcie żywieniowe<br><span>w trakcie leczenia</span></h1>
-            <p>Aplikacja mobilna, która pomaga pacjentom onkologicznym zarządzać codzienną dietą. Rekomendacje AI dopasowane do objawów, etapu leczenia i indywidualnych potrzeb.</p>
+            <h1 class="hero-title">Wsparcie żywieniowe<br><span>w trakcie leczenia</span></h1>
+            <p class="hero-subtitle">Aplikacja mobilna z rekomendacjami AI dopasowanymi do objawów, etapu leczenia i indywidualnych potrzeb pacjenta.</p>
             <a href="https://gitpushers67.github.io/pacjentwybiera/" class="hero-cta" target="_blank">
                 Otwórz aplikację
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
             </a>
         </div>
-        <div class="hero-phones">
-            <img src="screenshots/IMG_0748.PNG" alt="Ekran główny aplikacji">
-            <img src="screenshots/IMG_0751.PNG" alt="Zamówienie posiłków z AI">
+        <img class="hero-phone" id="heroPhone" src="screenshots/IMG_0748.PNG" alt="Aplikacja PacjentWybiera">
+    </div>
+</div>
+
+<!-- FEATURES -->
+<section class="features-section">
+    <div class="features-inner">
+        <div class="features-header">
+            <h2 class="reveal">Funkcje aplikacji</h2>
+            <p class="reveal">Kompleksowe narzędzie do zarządzania dietą podczas leczenia onkologicznego</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card reveal">
+                <div class="feature-icon green">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2a4 4 0 014 4c0 1.1-.9 2-2 2h-4a2 2 0 01-2-2 4 4 0 014-4z"/><path d="M9 12h6m-3-3v6m-7 4h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                </div>
+                <h3>Rekomendacje AI</h3>
+                <p>Algorytm dobiera posiłki na podstawie aktualnych objawów, alergii i etapu leczenia pacjenta.</p>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon green">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                </div>
+                <h3>Plan posiłków</h3>
+                <p>Przejrzysty harmonogram dnia z informacją o makroskładnikach i statusie każdego posiłku.</p>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon orange">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+                </div>
+                <h3>Kontakt z dietetykiem</h3>
+                <p>Bezpośrednia komunikacja ze specjalistą dietetyki onkologicznej w razie pytań o dietę.</p>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon green">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                </div>
+                <h3>Monitorowanie objawów</h3>
+                <p>Rejestracja nudności, zmęczenia, braku apetytu — system automatycznie dostosowuje menu.</p>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon orange">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 9v2m0 4h.01M5.07 19H19a2 2 0 001.75-2.97L13.75 4a2 2 0 00-3.5 0L3.32 16.03A2 2 0 005.07 19z"/></svg>
+                </div>
+                <h3>Zarządzanie alergenami</h3>
+                <p>Zaznaczone alergeny są automatycznie wykluczone z rekomendacji i oznaczone w menu.</p>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon green">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8m8 4H8m2-8H8"/></svg>
+                </div>
+                <h3>Szczegóły dań</h3>
+                <p>Pełna informacja o składnikach, wartościach odżywczych i uzasadnienie doboru dania.</p>
+            </div>
         </div>
     </div>
 </section>
 
-<section class="section">
-    <div class="section-header animate-on-scroll">
-        <h2>Funkcje aplikacji</h2>
-        <p>Kompleksowe narzędzie do zarządzania dietą podczas leczenia onkologicznego</p>
-    </div>
-    <div class="features-grid">
-        <div class="feature-card animate-on-scroll">
-            <div class="feature-icon green">
-                <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2a4 4 0 014 4c0 1.1-.9 2-2 2h-4a2 2 0 01-2-2 4 4 0 014-4z"/><path d="M9 12h6m-3-3v6m-7 4h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
-            </div>
-            <h3>Rekomendacje AI</h3>
-            <p>Algorytm dobiera posiłki na podstawie aktualnych objawów, alergii i etapu leczenia pacjenta.</p>
+<!-- PHILOSOPHY: Pro-patient section -->
+<section class="philosophy-section">
+    <div class="philosophy-inner">
+        <div class="philosophy-header">
+            <h2 class="reveal">Pacjent decyduje</h2>
+            <p class="reveal">Bo nikt nie zna Twojego ciała lepiej niż Ty sam</p>
         </div>
-        <div class="feature-card animate-on-scroll">
-            <div class="feature-icon green">
-                <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        <div class="philosophy-grid">
+            <div class="philosophy-card reveal">
+                <div class="philosophy-icon">
+                    <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </div>
+                <h3>Twój wybór, zawsze</h3>
+                <p>Nie narzucamy — proponujemy. Nawet jeśli nie masz siły zjeść zaplanowanego posiłku, aplikacja pomoże wybrać coś lżejszego. Ważne, żebyś zjadł cokolwiek.</p>
             </div>
-            <h3>Plan posiłków</h3>
-            <p>Przejrzysty harmonogram dnia z informacją o makroskładnikach i statusie każdego posiłku.</p>
-        </div>
-        <div class="feature-card animate-on-scroll">
-            <div class="feature-icon orange">
-                <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+            <div class="philosophy-card reveal">
+                <div class="philosophy-icon">
+                    <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                </div>
+                <h3>Zdrowie pacjenta na pierwszym miejscu</h3>
+                <p>Każda rekomendacja jest tworzona z myślą o Twoim samopoczuciu, nie o idealnej diecie. Liczy się to, co jesteś w stanie zjeść dziś — nie perfekcja.</p>
             </div>
-            <h3>Kontakt z dietetykiem</h3>
-            <p>Bezpośrednia komunikacja ze specjalistą dietetyki onkologicznej w razie pytań o dietę.</p>
-        </div>
-        <div class="feature-card animate-on-scroll">
-            <div class="feature-icon green">
-                <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 19V6l12-3v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+            <div class="philosophy-card reveal">
+                <div class="philosophy-icon">
+                    <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <h3>Bez presji, bez oceniania</h3>
+                <p>Złe dni się zdarzają. Aplikacja nie ocenia — dostosowuje się. Jeśli dziś dasz radę tylko zupę, to zupa jest idealnym wyborem.</p>
             </div>
-            <h3>Monitorowanie objawów</h3>
-            <p>Rejestracja nudności, zmęczenia, braku apetytu i innych objawów — system dostosowuje menu.</p>
-        </div>
-        <div class="feature-card animate-on-scroll">
-            <div class="feature-icon orange">
-                <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 9v2m0 4h.01M5.07 19H19a2 2 0 001.75-2.97L13.75 4a2 2 0 00-3.5 0L3.32 16.03A2 2 0 005.07 19z"/></svg>
+            <div class="philosophy-card reveal">
+                <div class="philosophy-icon">
+                    <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                </div>
+                <h3>Dopasowane do Twojego dnia</h3>
+                <p>Nudności, brak apetytu, zmęczenie — zgłoś jak się czujesz, a menu zmieni się w czasie rzeczywistym. System pracuje dla Ciebie, nie odwrotnie.</p>
             </div>
-            <h3>Zarządzanie alergenami</h3>
-            <p>Zaznaczone alergeny są automatycznie wykluczone z rekomendacji i oznaczone w menu.</p>
-        </div>
-        <div class="feature-card animate-on-scroll">
-            <div class="feature-icon green">
-                <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8m8 4H8m2-8H8"/></svg>
-            </div>
-            <h3>Szczegóły dań</h3>
-            <p>Pełna informacja o składnikach, wartościach odżywczych i uzasadnienie doboru dania.</p>
         </div>
     </div>
 </section>
 
-<section class="screenshots-wrap">
-    <div class="screenshots-inner">
-        <div class="section-header animate-on-scroll">
+<!-- SCREENSHOTS: Horizontal scroll driven by vertical scroll -->
+<div class="screenshots-container" id="screenshotsContainer">
+    <div class="screenshots-sticky">
+        <div class="screenshots-header">
             <h2>Interfejs aplikacji</h2>
-            <p>Zaprojektowany z myślą o wygodzie i czytelności dla pacjenta</p>
+            <p>Przewijaj dalej, aby zobaczyć ekrany</p>
         </div>
-        <div class="screenshots-scroll">
-            <div class="screenshot-item">
-                <img src="screenshots/IMG_0748.PNG" alt="Ekran główny">
-                <div class="screenshot-label">Ekran główny</div>
-            </div>
-            <div class="screenshot-item">
-                <img src="screenshots/IMG_0749.PNG" alt="Szczegóły dania">
-                <div class="screenshot-label">Szczegóły dania</div>
-            </div>
-            <div class="screenshot-item">
-                <img src="screenshots/IMG_0750.PNG" alt="Plan posiłków">
-                <div class="screenshot-label">Plan posiłków</div>
-            </div>
-            <div class="screenshot-item">
-                <img src="screenshots/IMG_0751.PNG" alt="Zamówienie">
-                <div class="screenshot-label">Zamówienie z AI</div>
-            </div>
-            <div class="screenshot-item">
-                <img src="screenshots/IMG_0752.PNG" alt="Objawy">
-                <div class="screenshot-label">Monitorowanie objawów</div>
-            </div>
-            <div class="screenshot-item">
-                <img src="screenshots/IMG_0753.PNG" alt="Chat">
-                <div class="screenshot-label">Chat z dietetykiem</div>
-            </div>
-            <div class="screenshot-item">
-                <img src="screenshots/IMG_0754.PNG" alt="Alergeny">
-                <div class="screenshot-label">Alergeny</div>
-            </div>
+        <div class="screenshots-track" id="screenshotsTrack">
+            <div class="screenshot-card"><img src="screenshots/IMG_0748.PNG" alt="Ekran główny"><span>Ekran główny</span></div>
+            <div class="screenshot-card"><img src="screenshots/IMG_0749.PNG" alt="Szczegóły dania"><span>Szczegóły dania</span></div>
+            <div class="screenshot-card"><img src="screenshots/IMG_0750.PNG" alt="Plan posiłków"><span>Plan posiłków</span></div>
+            <div class="screenshot-card"><img src="screenshots/IMG_0751.PNG" alt="Zamówienie"><span>Zamówienie z AI</span></div>
+            <div class="screenshot-card"><img src="screenshots/IMG_0752.PNG" alt="Objawy"><span>Monitorowanie objawów</span></div>
+            <div class="screenshot-card"><img src="screenshots/IMG_0753.PNG" alt="Chat"><span>Chat z dietetykiem</span></div>
+            <div class="screenshot-card"><img src="screenshots/IMG_0754.PNG" alt="Alergeny"><span>Alergeny</span></div>
         </div>
     </div>
-</section>
+</div>
 
-<section class="section">
-    <div class="section-header animate-on-scroll">
-        <h2>Jak to działa</h2>
-        <p>Trzy kroki do spersonalizowanej diety</p>
-    </div>
-    <div class="steps">
-        <div class="step animate-on-scroll">
+<!-- STEPS -->
+<section class="steps-section">
+    <div class="steps-inner">
+        <div class="steps-header">
+            <h2 class="reveal">Jak to działa</h2>
+        </div>
+        <div class="step-item reveal">
             <div class="step-num">1</div>
             <div class="step-content">
                 <h3>Uzupełnij profil zdrowotny</h3>
                 <p>Podaj typ nowotworu, rodzaj leczenia i alergeny — algorytm dopasuje jadłospis do Twojej sytuacji.</p>
             </div>
         </div>
-        <div class="step animate-on-scroll">
+        <div class="step-item reveal">
             <div class="step-num">2</div>
             <div class="step-content">
                 <h3>Przeglądaj i zamawiaj posiłki</h3>
                 <p>Każde danie ma uzasadnienie AI. Możesz je zmienić przesunięciem lub zaakceptować rekomendację.</p>
             </div>
         </div>
-        <div class="step animate-on-scroll">
+        <div class="step-item reveal">
             <div class="step-num">3</div>
             <div class="step-content">
                 <h3>Monitoruj i dostosowuj</h3>
@@ -469,8 +602,9 @@
     </div>
 </section>
 
+<!-- CTA -->
 <section class="cta-section">
-    <div class="cta-box animate-on-scroll">
+    <div class="cta-box reveal">
         <h2>Zacznij korzystać z aplikacji</h2>
         <p>Wsparcie dietetyczne dopasowane do Twojego etapu leczenia — dostępne od zaraz.</p>
         <a href="https://gitpushers67.github.io/pacjentwybiera/" class="cta-btn" target="_blank">Otwórz aplikację</a>
@@ -482,15 +616,74 @@
 </footer>
 
 <script>
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add('visible');
+// === HERO: Phone zoom + text fade on scroll ===
+const heroContainer = document.getElementById('heroContainer');
+const heroPhone = document.getElementById('heroPhone');
+const heroText = document.getElementById('heroText');
+
+function handleHeroScroll() {
+    const rect = heroContainer.getBoundingClientRect();
+    const scrolled = -rect.top;
+    const total = heroContainer.offsetHeight - window.innerHeight;
+    const progress = Math.max(0, Math.min(1, scrolled / total));
+
+    // Phone: hidden at start, appears after 30% scroll progress
+    const phoneStart = 0.3;
+    const phoneProgress = Math.max(0, (progress - phoneStart) / (1 - phoneStart));
+    const scale = 0.3 + phoneProgress * 1;
+    const bottom = -60 + phoneProgress * 80;
+    const phoneOpacity = Math.min(1, phoneProgress * 3);
+    heroPhone.style.transform = `translateX(-50%) scale(${scale})`;
+    heroPhone.style.bottom = `${bottom}%`;
+    heroPhone.style.opacity = phoneOpacity;
+
+    // Text: fades out as phone appears
+    const textOpacity = Math.max(0, 1 - progress * 2);
+    const textY = progress * -60;
+    heroText.style.opacity = textOpacity;
+    heroText.style.transform = `translateY(${textY}px)`;
+}
+
+// === SCREENSHOTS: Horizontal scroll driven by vertical scroll ===
+const screenshotsContainer = document.getElementById('screenshotsContainer');
+const screenshotsTrack = document.getElementById('screenshotsTrack');
+
+function handleScreenshotsScroll() {
+    const rect = screenshotsContainer.getBoundingClientRect();
+    const scrolled = -rect.top;
+    const total = screenshotsContainer.offsetHeight - window.innerHeight;
+    const progress = Math.max(0, Math.min(1, scrolled / total));
+
+    const trackWidth = screenshotsTrack.scrollWidth - window.innerWidth + 100;
+    const translateX = -progress * trackWidth;
+    screenshotsTrack.style.transform = `translateX(${translateX}px)`;
+}
+
+// === REVEAL: Elements appear on scroll ===
+const revealElements = document.querySelectorAll('.reveal');
+const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+            // Stagger delay based on sibling index
+            const siblings = entry.target.parentElement.querySelectorAll('.reveal');
+            const index = Array.from(siblings).indexOf(entry.target);
+            setTimeout(() => {
+                entry.target.classList.add('revealed');
+            }, index * 100);
+        }
     });
-}, { threshold: 0.1 });
-document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
-window.addEventListener('scroll', () => {
-    document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50);
-});
+}, { threshold: 0.15 });
+revealElements.forEach(el => revealObserver.observe(el));
+
+// === SCROLL HANDLER ===
+function onScroll() {
+    handleHeroScroll();
+    handleScreenshotsScroll();
+}
+
+window.addEventListener('scroll', onScroll, { passive: true });
+window.addEventListener('resize', onScroll);
+onScroll();
 </script>
 </body>
 </html>
