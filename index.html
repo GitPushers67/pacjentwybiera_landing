@@ -117,11 +117,76 @@
             box-shadow: 0 0 40px rgba(245, 166, 35, 0.3);
         }
         .hero-cta:hover { transform: scale(1.05); box-shadow: 0 0 60px rgba(245, 166, 35, 0.5); }
-        .hero-phone {
-            width: 260px;
-            border-radius: 30px;
-            box-shadow: 0 40px 100px rgba(0,0,0,0.5);
+        .hero-phone-wrapper {
             margin-top: 3rem;
+            position: relative;
+            width: 280px;
+        }
+        .hero-phone-wrapper .phone-frame {
+            width: 100%;
+            border-radius: 40px;
+            border: 8px solid #1a1a1a;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.5), inset 0 0 0 2px #333;
+            display: block;
+        }
+        .hero-phone-wrapper .phone-notch {
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 12px;
+            background: #1a1a1a;
+            border-radius: 0 0 10px 10px;
+        }
+
+        /* ===== NOTIFICATION - Push preview ===== */
+        .notification-section {
+            padding: 6rem 2rem 0;
+            background: var(--dark);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            overflow: hidden;
+        }
+        .notification-text {
+            max-width: 600px;
+            margin-bottom: 3rem;
+        }
+        .notification-text h2 {
+            font-size: clamp(1.6rem, 4vw, 2.4rem);
+            font-weight: 800;
+            color: white;
+            margin-bottom: 1rem;
+        }
+        .notification-text p {
+            color: rgba(255,255,255,0.6);
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+        .notification-img {
+            position: relative;
+            width: 300px;
+            margin: 0 auto;
+        }
+        .notification-img img {
+            width: 100%;
+            display: block;
+        }
+        .notification-img::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 150px;
+            background: linear-gradient(to bottom, transparent, var(--dark));
+            pointer-events: none;
+        }
+        @media (max-width: 768px) {
+            .notification-img { width: 240px; }
+            .notification-section { padding: 4rem 1.5rem 0; }
         }
 
         /* ===== FEATURES - Reveal on scroll ===== */
@@ -403,7 +468,7 @@
         /* Responsive */
         @media (max-width: 768px) {
             .hero-title { font-size: 2.5rem; }
-            .hero-phone { width: 200px; }
+            .hero-phone-wrapper { width: 200px; }
             .features-grid { grid-template-columns: 1fr; }
             .features-section { padding: 5rem 1.5rem; }
             .screenshot-card img { width: 180px; }
@@ -436,7 +501,10 @@
             <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
         </a>
     </div>
-    <img class="hero-phone" src="screenshots/IMG_0748.PNG" alt="Aplikacja PacjentWybiera">
+    <div class="hero-phone-wrapper">
+        <div class="phone-notch"></div>
+        <img class="phone-frame" src="screenshots/IMG_0748.PNG" alt="Aplikacja PacjentWybiera">
+    </div>
 </section>
 
 <!-- FEATURES -->
@@ -490,6 +558,17 @@
                 <p>Pełna informacja o składnikach, wartościach odżywczych i uzasadnienie doboru dania.</p>
             </div>
         </div>
+    </div>
+</section>
+
+<!-- NOTIFICATION PUSH -->
+<section class="notification-section">
+    <div class="notification-text">
+        <h2>Przypomnienia, które pomagają</h2>
+        <p>Aplikacja delikatnie przypomina o posiłkach — nawet gdy nie masz apetytu. Powiadomienia push dopasowane do Twojego planu dnia, żebyś nie zapomniał o jedzeniu w trakcie leczenia.</p>
+    </div>
+    <div class="notification-img">
+        <img src="screenshots/powiadomenie1.png" alt="Powiadomienie push z aplikacji PacjentWybiera">
     </div>
 </section>
 
